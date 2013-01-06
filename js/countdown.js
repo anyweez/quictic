@@ -58,8 +58,8 @@ function parseArgs() {
 }
 
 function decode_title(encoded) {
-  encoded = encoded.replace('%20', ' ');
-  encoded = encoded.replace('&amp;', '&');
+  encoded = encoded.replace(/%20/g, ' ');
+  encoded = encoded.replace(/&amp;/g, '&');
   
   return encoded;
 }
