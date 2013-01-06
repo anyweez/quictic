@@ -28,5 +28,9 @@ function standard() {
   // Labels.
   $('.label').css('font-size', '.3em');
   $('#year_label').css('position', 'relative');
+  
+  // Links
+  $('a').css('text-decoration', 'none');
+  $('a').css('color', 'white');
 }
 

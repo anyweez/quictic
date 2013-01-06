@@ -9,20 +9,24 @@ var title = null;
  * Parse arguments out of the URL.
  */
 function parseArgs() {
-//  var url = 'http://url/a/20131225/The Lebanese sons returns in...';   //window.location.pathname;
-  var url = window.location.pathname;
+  var url = 'http://url/a/20131225/The Lebanese son returns in...';   //window.location.pathname;
+//  var url = window.location.pathname;
   // protocol://url/theme_id/target/[title]
   // target := yyyymmdd@hhmmss
   parts = url.split('/');
   console.log(parts);
   
-  // TODO: Update this with the proper delta once the URL format is finalized.
-  if (parts.length < 3) return false;
-  
   try {
    theme = parts[parts.length - 3];
+   if (theme.length > 1) return false;
+   
    date_str = parts[parts.length - 2];
+   if (date_str.length < 8 || 
+       date_str.length > 15 || 
+       date_str.search('[a-z-A-Z]') > -1) return false;
+   
    title = parts[parts.length - 1];
+   if (title.length < 1) return false;
   
    // Parse date and time if @ symbol exists.
    if (date_str.indexOf('@') >= 0) {
@@ -79,8 +83,7 @@ function set_field(field_name, value) {
 }
 
 $(document).ready(function() {
-//  if (parseArgs()) {
-  if (false) {
+  if (parseArgs()) {
    // Set the title.
    $('#title').text(title);
    document.title = title + " - quictic.com";
@@ -93,8 +96,10 @@ $(document).ready(function() {
   }
   // Couldn't parse the URL correctly...required pieces are missing.
   else {
-   apply_theme('a');
-   $('#title').text("Hmm...invalid countdown. Try creating a new one?");
+   $('#title').html("Hmm...invalid countdown. Try <a href='http://quictic.com/'>creating a new one</a>?");
+   document.title = 'Invalid countdown - quictic.com';
+   
    $('#countdown').css('display', 'none');
+   apply_theme('a');
   }
 });
