@@ -94,7 +94,7 @@ $(document).ready(function() {
   if (parseArgs()) {
    // Set the title.
    $('#title').text(title);
-   document.title = decoded + " - quictic.com";
+   document.title = title + " - quictic.com";
 
    // Update the theme.
    apply_theme(theme);
