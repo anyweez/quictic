@@ -101,8 +101,8 @@
       text = text.replace(/labor day/g, '9/2');
       text = text.replace(/independence day/g, '7/4');
       text = text.replace(/fourth of july/g, '7/4');
-      text = text.replace(/new years day/g, '1/1/' + new Date($.now()).getFullYear());
-      text = text.replace(/new years/g, '1/1/' + new Date($.now()).getFullYear());
+      text = text.replace(/new years day/g, '1/1/' + new Date($.now()).getFullYear() + 1);
+      text = text.replace(/new years/g, '1/1/' + new Date($.now()).getFullYear() + 1);
       
       console.log(text);
       return Date.parse(text);
