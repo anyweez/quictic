@@ -15,31 +15,38 @@ function parseArgs() {
   // target := yyyymmdd@hhmmss
   parts = url.split('/');
   console.log(parts);
+  
+  // TODO: Update this with the proper delta once the URL format is finalized.
   if (parts.length < 3) return false;
   
-  theme = parts[parts.length - 3];
-  date_str = parts[parts.length - 2];
-  title = parts[parts.length - 1];
+  try {
+   theme = parts[parts.length - 3];
+   date_str = parts[parts.length - 2];
+   title = parts[parts.length - 1];
   
-  // Parse date and time if @ symbol exists.
-  if (date_str.indexOf('@') >= 0) {
+   // Parse date and time if @ symbol exists.
+   if (date_str.indexOf('@') >= 0) {
     target_ts = new Date(
-      date_str.substring(0,4),  // year
-      date_str.substring(4,6) - 1,  // month
-      date_str.substring(6,8),  // day
-      date_str.substring(9,11), // hour
-      date_str.substring(11,13), // minutes
-      date_str.substring(13,15) // seconds
+     date_str.substring(0,4),  // year
+     date_str.substring(4,6) - 1,  // month
+     date_str.substring(6,8),  // day
+     date_str.substring(9,11), // hour
+     date_str.substring(11,13), // minutes
+     date_str.substring(13,15) // seconds
     ).getTime();
+   }
+   // Otherwise just pull out the date.
+   else {
+    target_ts = new Date(
+     date_str.substring(0,4),  // year
+     date_str.substring(4,6) - 1,  // month
+     date_str.substring(6,8),  // day
+     0, 0, 0
+    ).getTime();
+   }
   }
-  // Otherwise just pull out the date.
-  else {
-    target_ts = new Date(
-      date_str.substring(0,4),  // year
-      date_str.substring(4,6) - 1,  // month
-      date_str.substring(6,8),  // day
-      0, 0, 0
-    ).getTime();
+  catch (e) {
+   return false;
   }
   
   return true;
@@ -72,12 +79,12 @@ function set_field(field_name, value) {
 }
 
 $(document).ready(function() {
-  if (parseArgs()) {
-  
+//  if (parseArgs()) {
+  if (false) {
    // Set the title.
    $('#title').text(title);
    document.title = title + " - quictic.com";
-  
+
    // Update the theme.
    apply_theme(theme);
   
@@ -86,6 +93,8 @@ $(document).ready(function() {
   }
   // Couldn't parse the URL correctly...required pieces are missing.
   else {
+   apply_theme('a');
    $('#title').text("Hmm...invalid countdown. Try creating a new one?");
+   $('#countdown').css('display', 'none');
   }
 });
