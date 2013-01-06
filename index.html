@@ -125,7 +125,6 @@
       
       // Log the title and requested time string.
       _gaq.push(['_trackEvent', 'Request', 'Title', title]);
-      _gaq.push(['_trackEvent', 'Request', 'When', when]);
        
       var parsed = Date.parse(when)
       // Check to see if the date could be parsed. If not, try the fallback parsing.
@@ -134,9 +133,13 @@
        // If fallback parsing fails, we have to throw an error.
        if (parsed == null) {
 		   error();
+		   // Didn't understand the requested time.
+		   _gaq.push(['_trackEvent', 'Request', 'When', when, 0]);
 		   return;
 	   }
       }
+      // Understood the requested time.
+      _gaq.push(['_trackEvent', 'Request', 'When', when, 1]);
 
       clear_error();
       var us = parsed.toString('yyyyMMdd@HHmmss');
