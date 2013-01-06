@@ -108,7 +108,7 @@
      function countdown() {
       var title = $('#title').val();
       var when = $('#when').val();
-      var style = 1;
+      var style = 'a';
        
       var parsed = Date.parse(when)
       // Check to see if the date could be parsed. If not, try the fallback parsing.
@@ -125,9 +125,8 @@
        var us = parsed.toString('yyyyMMdd@HHmmss');
        var url = 'http://quictic.com/' + style + '/' + us + '/' + title;
        
-       console.log(url);
        // Change the window location.
-//       window.location.href = url;
+       window.location.href = url;
       }
      }
     </script>
