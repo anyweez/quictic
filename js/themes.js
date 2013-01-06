@@ -12,7 +12,7 @@ function apply_theme(theme_id) {
 
 function standard() {
   // Set global colors and fonts.
-  $('body').css('background-image', 'url(img/debut_dark.png)');
+  $('body').css('background-image', 'url(/img/debut_dark.png)');
   $('body').css('background-repeat', 'repeat');
   $('body').css('color', '#fff');
   
