@@ -9,8 +9,8 @@ var title = null;
  * Parse arguments out of the URL.
  */
 function parseArgs() {
-//  var url = 'http://url/a/20131225/The Lebanese son returns in...';   //window.location.pathname;
-  var url = window.location.pathname;
+  var url = 'http://url/a/20131225/The Lebanese son returns in...';   //window.location.pathname;
+//  var url = window.location.pathname;
   // protocol://url/theme_id/target/[title]
   // target := yyyymmdd@hhmmss
   parts = url.split('/');

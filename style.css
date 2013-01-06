@@ -2,10 +2,22 @@ body {
  vertical-align: middle;
  font-family: 'Fjalla One', sans-serif;
  text-rendering: optimizeLegibility;
+ 
+ margin: 0;
 }
 
 div {
  display: block;
+}
+
+#body {
+ margin: 0 auto;
+ margin-top: 10%;
+ padding: 20px;
+      
+ text-align: center;
+ border: 1px solid black;
+ background: rgba(255, 255, 255, .2);
 }
 
 #title {

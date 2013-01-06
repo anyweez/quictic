@@ -19,7 +19,6 @@ function standard() {
   // Title-specific properties.
   $('#title').css('font-size', '4em');
   $('#title').css('color', '#858774');
-  $('#title').css('padding-top', '10%');
   $('#title').css('padding-bottom', '1%');
 
   // Countdown-specific properties.
@@ -32,5 +31,11 @@ function standard() {
   // Links
   $('a').css('text-decoration', 'none');
   $('a').css('color', 'white');
+  
+  // #body
+  $('#body').css('margin-top', '10%');
+  $('#body').css('padding', '30px 0px 20px 0px');
+  $('#body').css('border', '1px solid black');
+  $('#body').css('background', 'rgba(255, 255, 255, .15)');
 }
 
