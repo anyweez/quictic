@@ -1,0 +1,159 @@
+<html>
+  <head>
+    <title>Countdown generator - quictic</title>
+    <script src="jquery.min.js"></script>
+    <script src="date.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    
+    <style type="text/css">
+     body {
+      font-family: Arial;
+      margin: 0;
+      background-color: #fff;
+      
+      background-image: url(img/debut_dark.png);
+      background-repeat: repeat;
+     }
+     
+     #body {
+      margin: 0 auto;
+      margin-top: 10%;
+      padding: 20px;
+      
+      text-align: center;
+      border: 1px solid black;
+      background: rgba(255, 255, 255, .2);
+     }
+     
+     #fields {
+	  display: inline-block;
+	 }
+	 
+	 #btn {
+	  display: inline-block;
+	  vertical-align: top;
+      margin: 10px 0 0 20px;
+      padding: 13px;
+	  
+      width: 200px;
+	  height: 90px;
+	  
+	  font-size: 1em;
+	  border: 1px solid black;
+	  
+	 }
+     
+     input {
+      display: block;
+      margin: 0 auto;
+     }
+
+     input[type=text] {
+      font-size: 1.2em;
+      width: 450px;
+      height: 40px;
+      
+      border: 1px solid #333;
+      
+      margin: 10px;
+      padding: 5px;
+     }
+     
+     #error {
+      background-color: #FFD1D9;
+      border: 1px solid red;
+      padding: 3px;
+      display: none;
+     }
+    </style>
+    
+    <script type="text/javascript">
+     function is_numeric(num) { return !isNaN(num) && num.length > 0; }
+     function btwn(num, min, max) { return num >= min && num <= max; }
+    
+     // Validation functions.
+     function validate_year(year) { return is_numeric(year) && year.length == 4; }
+     function validate_month(month) { return is_numeric(month) && btwn(month, 1, 12); }
+     function validate_day(day) { return is_numeric(day) && btwn(day, 1, 31) };
+     function validate_hour(hour) { return is_numeric(hour) && btwn(hour, 0, 23); }
+     function validate_minute(minute) { return is_numeric(minute) && btwn(minute, 0, 59); }
+     
+     function validate_title(title) { return true; }
+     function validate_style(style) { return style != null; }
+     
+     function is_future(date) {
+       return date.isAfter();
+     }
+     
+    /**
+     * This function checks for known cases that DateJS misses.
+     *
+     * Returns either a DateJS date object or null if the text
+     * can't be parsed correctly.
+     */
+     function fallback(text) {
+      return null;
+     }
+     
+     function error() {
+      $('#when').css('border', '1px solid red');
+      $('#when').css('background-color', '#FFD9DD');
+      
+      // TODO: Write this.
+     }
+     
+     function clear_error() {
+      $('#when').css('border', '1px solid #333');
+      $('#when').css('background-color', '#fff');
+	 }
+     
+     function countdown() {
+      var title = $('#title').val();
+      var when = $('#when').val();
+      var style = 1;
+       
+      var parsed = Date.parse(when)
+      // Check to see if the date could be parsed. If not, try the fallback parsing.
+      if (parsed == null) {
+       parsed = fallback(when);
+       // If fallback parsing fails, we have to throw an error.
+       if (parsed == null) error();
+      }
+      else {
+       clear_error();
+       console.log(title);
+       console.log(parsed);
+       
+       var us = parsed.toString('yyyyMMdd@HHmmss');
+       var url = 'http://www.quictic.com/' + style + '/' + us + '/' + title;
+       
+       console.log(url);
+       // Change the window location.
+//       window.location.href = url;
+      }
+     }
+    </script>
+  </head>
+  <body>
+   <div id="body">
+    <div id="fields">
+     <input type="text" id="title" placeholder="Countdown name" />
+     <input type="text" id="when" placeholder="Countdown to..." />
+    </div>
+    <input type="button" id="btn" onclick="countdown()" value="Create" />
+   </div>
+   
+   <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37464806-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+   </script>
+  </body>
+</html>

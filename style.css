@@ -1,0 +1,43 @@
+body {
+ vertical-align: middle;
+ font-family: 'Fjalla One', sans-serif;
+ text-rendering: optimizeLegibility;
+}
+
+div {
+ display: block;
+}
+
+#title {
+ text-align: center;
+ margin-bottom: 1.5%;
+}
+
+#countdown {
+ width: 100%;
+ text-align: center;
+ vertical-align: middle;
+ margin: 0 auto;
+
+ font-size: 5em;
+}
+
+#date {
+ display: inline-block;
+ width: 45%;
+}
+
+#time {
+ display: inline-block;
+ width: 45%;
+}
+
+.dt_block {
+ width: 30%; 
+ display: inline-block; 
+ float: left;
+}
+
+.dt_data {
+ display: block;
+}
