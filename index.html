@@ -122,6 +122,10 @@
       var title = $('#title').val();
       var when = $('#when').val();
       var style = 'a';
+      
+      // Log the title and requested time string.
+      _gaq.push(['_trackEvent', 'Request', 'Title', title]);
+      _gaq.push(['_trackEvent', 'Request', 'When', when]);
        
       var parsed = Date.parse(when)
       // Check to see if the date could be parsed. If not, try the fallback parsing.
