@@ -136,13 +136,14 @@
 		   error();
 		   return;
 	   }
+      }
 
-       clear_error();
-       var us = parsed.toString('yyyyMMdd@HHmmss');
-       var url = 'http://quictic.com/' + style + '/' + us + '/' + title;
+      clear_error();
+      var us = parsed.toString('yyyyMMdd@HHmmss');
+      var url = 'http://quictic.com/' + style + '/' + us + '/' + title;
        
-       // Change the window location.
-       window.location.href = url;
+      // Change the window location.
+      window.location.href = url;
       }
      }
     </script>
