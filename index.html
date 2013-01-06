@@ -92,8 +92,17 @@
      * can't be parsed correctly.
      */
      function fallback(text) {
-	  text = text.toLowerCase();
-      text = text.replace(/Christmas/g, '12/25');
+      // Standardize the case and remove punctuation.
+	  text = text.toLowerCase().replace(/[^\w\s]/gi, '');
+
+	  // Easter egg!
+	  text = text.replace(/dee/g, 'day');
+      text = text.replace(/christmas/g, '12/25');
+      text = text.replace(/labor day/g, '9/2');
+      text = text.replace(/independence day/g, '7/4');
+      text = text.replace(/fourth of july/g, '7/4');
+      text = text.replace(/new years day/g, '1/1/' + new Date($.now()).getFullYear());
+      text = text.replace(/new years/g, '1/1/' + new Date($.now()).getFullYear());
       
       return Date.parse(text);
      }
