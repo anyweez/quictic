@@ -104,6 +104,7 @@
       text = text.replace(/new years day/g, '1/1/' + new Date($.now()).getFullYear());
       text = text.replace(/new years/g, '1/1/' + new Date($.now()).getFullYear());
       
+      console.log(text);
       return Date.parse(text);
      }
      
