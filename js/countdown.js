@@ -85,7 +85,7 @@ function set_field(field_name, value) {
 $(document).ready(function() {
   if (parseArgs()) {
    // Set the title.
-   $('#title').text(title);
+   $('#title').html(title);
    document.title = title + " - quictic.com";
 
    // Update the theme.
