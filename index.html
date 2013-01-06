@@ -1,8 +1,11 @@
 <html>
   <head>
     <title>Countdown generator - quictic</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    
     <script src="date.js"></script>
     
     <style type="text/css">
@@ -64,26 +67,24 @@
       padding: 3px;
       display: none;
      }
+     
+     .ui-tooltip {
+	  font-size: .8em;
+	  width: 500px;
+	 }
     </style>
     
     <script type="text/javascript">
-     function is_numeric(num) { return !isNaN(num) && num.length > 0; }
-     function btwn(num, min, max) { return num >= min && num <= max; }
-    
-     // Validation functions.
-     function validate_year(year) { return is_numeric(year) && year.length == 4; }
-     function validate_month(month) { return is_numeric(month) && btwn(month, 1, 12); }
-     function validate_day(day) { return is_numeric(day) && btwn(day, 1, 31) };
-     function validate_hour(hour) { return is_numeric(hour) && btwn(hour, 0, 23); }
-     function validate_minute(minute) { return is_numeric(minute) && btwn(minute, 0, 59); }
-     
-     function validate_title(title) { return true; }
-     function validate_style(style) { return style != null; }
-     
-     function is_future(date) {
-       return date.isAfter();
-     }
-     
+	 $(document).ready(function() {
+	  $('#when').tooltip({
+	   content: "What are you counting down to? Examples: <i>12/31/2013</i>, <i>Next Friday</i>, or <i>Christmas</i>.</ul>",
+	   position:  {
+		my: 'left bottom+55',
+		at: 'left bottom'
+	   },
+	   opacity: 0.9
+	  });
+	 });    
     /**
      * This function checks for known cases that DateJS misses.
      *
@@ -135,7 +136,7 @@
    <div id="body">
     <div id="fields">
      <input type="text" id="title" placeholder="Countdown name" />
-     <input type="text" id="when" placeholder="Countdown to..." />
+     <input type="text" id="when" title="Testing" placeholder="Countdown to..." />
     </div>
     <input type="button" id="btn" onclick="countdown()" value="Create" />
    </div>
