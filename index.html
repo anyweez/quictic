@@ -128,13 +128,12 @@
       if (parsed == null) {
        parsed = fallback(when);
        // If fallback parsing fails, we have to throw an error.
-       if (parsed == null) error();
-      }
-      else {
+       if (parsed == null) {
+		   error();
+		   return;
+	   }
+
        clear_error();
-       console.log(title);
-       console.log(parsed);
-       
        var us = parsed.toString('yyyyMMdd@HHmmss');
        var url = 'http://quictic.com/' + style + '/' + us + '/' + title;
        
