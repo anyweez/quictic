@@ -92,7 +92,10 @@
      * can't be parsed correctly.
      */
      function fallback(text) {
-      return null;
+	  text = text.toLowerCase();
+      text = text.replace(/Christmas/g, '12/25');
+      
+      return Date.parse(text);
      }
      
      function error() {
