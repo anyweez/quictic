@@ -27,6 +27,7 @@ function parseArgs() {
    
    title = parts[parts.length - 1];
    if (title.length < 1) return false;
+   title = decode_title(title);
   
    // Parse date and time if @ symbol exists.
    if (date_str.indexOf('@') >= 0) {
@@ -54,6 +55,13 @@ function parseArgs() {
   }
   
   return true;
+}
+
+function decode_title(encoded) {
+  encoded = encoded.replace('%20', ' ');
+  encoded = encoded.replace('&amp;', '&');
+  
+  return encoded;
 }
 
 function update() {
@@ -85,8 +93,7 @@ function set_field(field_name, value) {
 $(document).ready(function() {
   if (parseArgs()) {
    // Set the title.
-   var decoded = $('#title').text(title).html();
-   $('#title').text(decoded);
+   $('#title').text(title);
    document.title = decoded + " - quictic.com";
 
    // Update the theme.
