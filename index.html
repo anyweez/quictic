@@ -6,7 +6,7 @@
     <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     
-    <script src="/js/date.js"></script>
+    <script src="http://quictic.com/js/date.js"></script>
     
     <style type="text/css">
      body {
@@ -16,6 +16,7 @@
       
       background-image: url(img/debut_dark.png);
       background-repeat: repeat;
+      text-rendering: optimizeLegibility;
      }
      
      #body {
@@ -28,22 +29,73 @@
       background: rgba(255, 255, 255, .15);
      }
      
-     #fields {
-	  display: inline-block;
+     #body #heading {
+      margin-bottom: 5px;
+      
+      color: #DBDBAD;
+	 }
+     
+     #body h1 {
+      display: inline-block;
+      width: 250px;
+      font-family: 'Fjalla One', sans-serif;
+      font-size: 48px;
+      
+      margin: 2px 0 10px 0;
+      
+      text-shadow: 2px 2px .1em #333;
 	 }
 	 
-	 #btn {
-	  display: inline-block;
-	  vertical-align: top;
+	 #body p {
+      display: inline-block;
+      text-align: left;
+      width: 500px;
+      margin: 2px;
+      
+      line-height: 24px;
+      text-shadow: 2px 2px 1px #333;
+	 }
+     
+     #container {
+      width: 800px;
+      margin: 0 auto;
+      
+      text-align: left;
+	 }
+     
+     #fields {
+      display: inline-block;
+     }
+	 
+     #btn {
+      display: inline-block;
+      vertical-align: top;
       margin: 10px 0 0 20px;
       padding: 13px;
 	  
       width: 200px;
-	  height: 90px;
+      height: 90px;
 	  
-	  font-size: 1em;
-	  border: 1px solid black;
-	 }
+      font-size: 1em;
+      border: 1px solid black;
+      
+      -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	  -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	  box-shadow:inset 0px 1px 0px 0px #ffffff;
+	  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	  background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	  background-color:#ededed;
+	  border:1px solid #dcdcdc;
+	  display:inline-block;
+	  color:#777777;
+	  font-family:arial;
+	  font-size:15px;
+	  font-weight:bold;
+	  padding:6px 24px;
+	  text-decoration:none;
+	  text-shadow:1px 1px 0px #ffffff;
+     }
      
      input {
       display: block;
@@ -57,7 +109,7 @@
       
       border: 1px solid #333;
       
-      margin: 10px;
+      margin: 10px 0 10px 0;
       padding: 5px;
      }
      
@@ -97,6 +149,9 @@
 
 	  // Easter egg!
 	  text = text.replace(/dee/g, 'day');
+	  
+	  // Standard text replacement patterns
+      text = text.replace(/this/g, ''); // DateJS parses correctly without the word 'this'
       text = text.replace(/christmas/g, '12/25');
       text = text.replace(/labor day/g, '9/2');
       text = text.replace(/independence day/g, '7/4');
@@ -104,7 +159,6 @@
       text = text.replace(/new years day/g, '1/1/' + (new Date($.now()).getFullYear() + 1));
       text = text.replace(/new years/g, '1/1/' + (new Date($.now()).getFullYear() + 1));
       
-      console.log(text);
       return Date.parse(text);
      }
      
@@ -128,20 +182,22 @@
        
       var parsed = Date.parse(when)
       // Check to see if the date could be parsed. If not, try the fallback parsing.
-      if (parsed == null) {
+      if (parsed == null || isNaN(parsed)) {
        parsed = fallback(when);
        // If fallback parsing fails, we have to throw an error.
-       if (parsed == null) {
+       if (parsed == null || isNaN(parsed)) {
 		   error();
 		   // Didn't understand the requested time.
 		   _gaq.push(['_trackEvent', 'Request', 'When', when, 0]);
 		   return;
 	   }
       }
+      
       // Understood the requested time.
       _gaq.push(['_trackEvent', 'Request', 'When', when, 1]);
 
       clear_error();
+      console.log(parsed);
       var us = parsed.toString('yyyyMMdd@HHmmss');
       var url = 'http://quictic.com/' + style + '/' + us + '/' + title;
        
@@ -152,11 +208,17 @@
   </head>
   <body>
    <div id="body">
+    <div id="container">
+    <div id="heading">
+     <h1>quictic.com</h1>
+     <p>quickly create shareable countdowns<br />just provide a title and some time to count down to.</p>
+    </div>
     <div id="fields">
      <input type="text" id="title" placeholder="Countdown name" />
      <input type="text" id="when" title="Testing" placeholder="Countdown to..." />
     </div>
     <input type="button" id="btn" onclick="countdown()" value="Create" />
+    </div>
    </div>
    
    <script type="text/javascript">

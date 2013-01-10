@@ -18,8 +18,9 @@ function standard() {
   
   // Title-specific properties.
   $('#title').css('font-size', '4em');
-  $('#title').css('color', '#858774');
+  $('#title').css('color', '#DBDBAD');
   $('#title').css('padding-bottom', '1%');
+  $('#title').css('text-shadow', '2px 2px .1em #333');
 
   // Countdown-specific properties.
   $('#countdown').css('font-size', '8em');
