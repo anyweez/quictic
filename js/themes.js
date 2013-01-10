@@ -24,6 +24,7 @@ function standard() {
 
   // Countdown-specific properties.
   $('#countdown').css('font-size', '8em');
+  $('#countdown').css('text-shadow', '2px 2px .1em #333');
   
   // Labels.
   $('.label').css('font-size', '.3em');
