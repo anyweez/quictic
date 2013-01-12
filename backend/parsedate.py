@@ -85,7 +85,7 @@ def main():
 		return
 	
 	date_str = parsed_date.strftime("%Y%m%d@%H%M%S")
-	message.append(json.dumps({ 'date' : date_str, 'orig' : query_string, 'runtime' : '.5%' % (time.time() - start_time) }))
+	message.append(json.dumps({ 'date' : date_str, 'orig' : query_string, 'runtime' : '.5%f' % (time.time() - start_time) }))
 
 	write_out(message)
 
