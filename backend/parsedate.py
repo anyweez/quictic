@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import json, datetime, cgi, time, re, urllib, sys
+import json, datetime, cgi, time, re, urllib, sys, pytz
 # Import parsedatetime library from http://github.com/bear/parsedatetime.git
 import pdt
 
@@ -45,15 +45,24 @@ def parse(query, msg):
 
 	result, what = c.parse(query)
 
+    # TODO: Get rid of timezone and DST settings.
 	if what in (1, 2):
-		dt = datetime.datetime( *result[:6] )
+		dt = datetime.datetime( *result[:6] ).replace(tzinfo=None)
 		sys.stderr.write( 'type: %s' % str(what) )
 	elif what == 3:
-		dt = result
+		dt = result.replace(tzinfo=None)
 		sys.stderr.write( 'type: %s' % str(what) )
 	else:
 		msg.append(json.dumps({ 'orig' : query, 'date': None}))
 
+	# If the dt is before now, try adding a day ([7pm] will default to 
+	# today, but should default to tomorrow).
+	if dt is not None and dt < datetime.datetime.now():
+		 dt = dt + datetime.timedelta(days=1)
+		 # If its still before now, report none. Negative timedeltas
+		 # don't make sense for countdowns.
+		 if dt < datetime.datetime.now():
+			 return None
 	return dt
 		
 def main():
@@ -76,7 +85,7 @@ def main():
 		return
 	
 	date_str = parsed_date.strftime("%Y%m%d@%H%M%S")
-	message.append(json.dumps({ 'date' : date_str, 'orig' : query_string, 'runtime' : time.time() - start_time }))
+	message.append(json.dumps({ 'date' : date_str, 'orig' : query_string, 'runtime' : '.5%' % (time.time() - start_time) }))
 
 	write_out(message)
 
