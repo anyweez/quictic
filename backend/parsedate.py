@@ -3,6 +3,9 @@ import json, datetime, cgi, time, re, urllib, sys, string, time
 # Import parsedatetime library from http://github.com/bear/parsedatetime.git
 import pdt
 
+LOG_PATH = '/home/asegars/applogs/quictic.com/query/'
+LOG_FILE = LOG_PATH + datetime.datetime.now().strftime("%Y.%m.%d") + '.log'
+
 # Print a standard JSON header.
 def add_header(msg):
 	msg.append("Content-type: text/json")
@@ -41,7 +44,6 @@ def parse(query, msg):
     # TODO: Get rid of timezone and DST settings.
 	if what in (1, 2):
 		dt = datetime.datetime( *result[:6] ).replace(tzinfo=None)
-		sys.stderr.write( 'type: %s' % str(what) )
 	elif what == 3:
 		result = datetime.datetime.fromtimestamp(time.mktime(result))
 #		sys.stderr.write( str(result) )
@@ -92,16 +94,28 @@ def main():
 	# If there's no query string then call it off.
 	if query_string is None:
 		write_out(message)
+		
+		# Write to log
+		with open(LOG_FILE, 'a') as f:
+			f.write('%s\t%s\t%s' % ('none', '', 'no_query'))	
 		return
 
 	parsed_date = parse(query_string, message)
 	
 	if parsed_date is None:
 		write_out(message)
+		
+		# Write to log
+		with open(LOG_FILE, 'a') as f:
+			f.write('%s\t%s\t%s' % (query_str, 'unknown', 'unknown'))	
 		return
 	
 	date_str = parsed_date.strftime("%Y%m%d@%H%M%S")
 	message.append(json.dumps({ 'date' : date_str, 'orig' : query_string, 'runtime' : '%.5f' % (time.time() - start_time) }))
+
+	# Write to log
+	with open(LOG_FILE, 'a') as f:
+		f.write('%s\t%s\t%s' % (query_string, date_str, 'success'))	
 
 	write_out(message)
 
