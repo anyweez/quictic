@@ -23,7 +23,8 @@ def get_string(msg):
 
 def log_query(query, translation, code):
 	with open(LOG_FILE, 'ab+') as f:
-		f.write('%s\t%s\t%s\n' % (query, translation, code))	
+		now = datetime.datetime.now()
+		f.write('%s\t%s\t%s\t%s\n' % (now.strftime("%H:%M:%S"), query, translation, code))	
 		f.flush()
 
 def write_out(msg):
@@ -47,7 +48,10 @@ def parse(query, msg):
 	result, what = c.parse(query)
 
     # TODO: Get rid of timezone and DST settings.
-	if what in (1, 2):
+    if what == 1:
+		dt = datetime.datetime( *result[:6] ).replace(tzinfo=None)
+		# TODO: Clear out the time fields.
+	elif what == 2:
 		dt = datetime.datetime( *result[:6] ).replace(tzinfo=None)
 	elif what == 3:
 		result = datetime.datetime.fromtimestamp(time.mktime(result))
