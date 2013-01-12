@@ -21,6 +21,11 @@ def get_string(msg):
 		msg.append(json.dumps({ 'error_text' : 'No query string provided.', 'error_code': 1}))
 		return None
 
+def log_query(query, translation, code):
+	with open(LOG_FILE, 'ab+') as f:
+		f.write('%s\t%s\t%s' % (query, translation, code))	
+		f.flush()
+
 def write_out(msg):
 	print '\n'.join(msg)
 
@@ -94,33 +99,26 @@ def main():
 	# If there's no query string then call it off.
 	if query_string is None:
 		write_out(message)
-		
+		log_query('none', '', 'no_query')
+	
 		# Write to log
-		with open(LOG_FILE, 'a') as f:
-			f.write('%s\t%s\t%s' % ('none', '', 'no_query'))	
-			f.flush()
 		return
 
 	parsed_date = parse(query_string, message)
 	
 	if parsed_date is None:
 		write_out(message)
+		log_query(query_str, 'unknown', 'unknown')
 		
 		# Write to log
-		with open(LOG_FILE, 'a') as f:
-			f.write('%s\t%s\t%s' % (query_str, 'unknown', 'unknown'))	
-			f.flush()
 		return
 	
 	date_str = parsed_date.strftime("%Y%m%d@%H%M%S")
 	message.append(json.dumps({ 'date' : date_str, 'orig' : query_string, 'runtime' : '%.5f' % (time.time() - start_time) }))
 
 	# Write to log
-	with open(LOG_FILE, 'a') as f:
-		f.write('%s\t%s\t%s' % (query_string, date_str, 'success'))	
-		f.flush()
-
 	write_out(message)
+	log_query(query_string, date_str, 'success')
 
 if __name__ == '__main__':
 	main()
