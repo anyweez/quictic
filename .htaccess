@@ -1,4 +1,4 @@
 
 RewriteEngine on
 RewriteRule [a-z]/[0-9@]+/(.+) countdown.html [L]
-RewriteRule getdate/?([ -~]) backend/parsedate.py?str=$1
+RewriteRule getdate/?([ -~])+ backend/parsedate.py?str=$1
