@@ -48,17 +48,15 @@ def parse(query, msg):
 	result, what = c.parse(query)
 
     # TODO: Get rid of timezone and DST settings.
-    if what == 1:
-		dt = datetime.datetime( *result[:6] ).replace(tzinfo=None)
-		# TODO: Clear out the time fields.
+	if what == 1:
+		dt = datetime.datetime( *result[:6] )
+		dt.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=None)
 	elif what == 2:
-		dt = datetime.datetime( *result[:6] ).replace(tzinfo=None)
+		dt = datetime.datetime( *result[:6] )
+		dt.replace(tzinfo=None)
 	elif what == 3:
 		result = datetime.datetime.fromtimestamp(time.mktime(result))
-#		sys.stderr.write( str(result) )
-#		sys.stderr.write( str(type(result)) )
 		dt = result.replace(tzinfo=None)
-#		sys.stderr.write( 'type: %s' % str(what) )
 	else:
 		msg.append(json.dumps({ 'orig' : query, 'date': None}))
 
