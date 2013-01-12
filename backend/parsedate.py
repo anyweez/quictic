@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import json, datetime, cgi, time, re
+import json, datetime, cgi, time, re, urllib
 # Import parsedatetime library from http://github.com/bear/parsedatetime.git
 import pdt
 
@@ -13,7 +13,7 @@ def get_string(msg):
 	args = cgi.FieldStorage()
 	
 	try:
-		return args['str'].value
+		return urllib.unquote(args['str'].value)
 	except KeyError:
 		msg.append(json.dumps({ 'error_text' : 'No query string provided.', 'error_code': 1}))
 		return None
