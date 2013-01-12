@@ -22,7 +22,7 @@ def write_out(msg):
 def parse(query, msg):
 	date = None
 	
-	if query == christmas:
+	if query == 'christmas':
 		date = '12/25'
 	
 	if date is None:
