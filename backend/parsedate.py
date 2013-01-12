@@ -36,9 +36,9 @@ def parse(query, msg):
 	
 	if 'christmas' in query:
 		if now.tm_mon == 12 and now.tm_mday > 25:
-			query = re.sub('christmas', '12/25/' + now.tm_year + 1, query)
+			query = re.sub('christmas', '12/25/' + str(now.tm_year + 1), query)
 		else:
-			query = re.sub('christmas', '12/25/' + now.tm_year, query)
+			query = re.sub('christmas', '12/25/' + str(now.tm_year), query)
 			
 	c = pdt.Calendar()
 	dt = None
