@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import json, datetime, cgi, time
+# Import parsedatetime library from http://github.com/bear/parsedatetime.git
+import pdt
 
 # Print a standard JSON header.
 def add_header(msg):
@@ -19,17 +21,40 @@ def get_string(msg):
 def write_out(msg):
 	print '\n'.join(msg)
 
+# Parse the input string and provide a struct_time object as output
+#
+# INPUT: 
+#   query = string that was provided to the CGI script
+#   msg   = message queue that will be printed at the end of execution
+#
+# OUTPUT:
+#   struct_time object
 def parse(query, msg):
 	date = None
 	
-	if query == 'christmas':
-		date = '12/25'
+	now = time.localtime() # Current time
 	
-	if date is None:
-		msg.append(json.dumps({ 'orig' : query, 'date': None}))
-		return None
+	time.struct_time(tuple(pdt.Calendar().parse(s)[0]))
+	
+	if 'christmas' in query:
+		if now.tm_mon == 12 and now.tm_mday > 25:
+			query = re.sub('christmas', '12/25/' + now.tm_year + 1, query)
+		else:
+			query = re.sub('christmas', '12/25/' + now.tm_year, query)
+			
+	c = pdt.Calendar()
+	dt = None
+
+	result, what = c.parse(query)
+
+	if what in (1, 2):
+		dt = datetime.datetime( *result[:6] )
+	elif what == 3:
+		dt = result
 	else:
-		return datetime.datetime.now()
+		msg.append(json.dumps({ 'orig' : query, 'date': None}))
+
+	return dt
 		
 def main():
 	start_time = time.time()
