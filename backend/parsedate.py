@@ -23,7 +23,7 @@ def get_string(msg):
 
 def log_query(query, translation, code):
 	with open(LOG_FILE, 'ab+') as f:
-		f.write('%s\t%s\t%s' % (query, translation, code))	
+		f.write('%s\t%s\t%s\n' % (query, translation, code))	
 		f.flush()
 
 def write_out(msg):
