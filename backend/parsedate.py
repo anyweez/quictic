@@ -34,8 +34,6 @@ def parse(query, msg):
 	
 	now = time.localtime() # Current time
 	
-	time.struct_time(tuple(pdt.Calendar().parse(s)[0]))
-	
 	if 'christmas' in query:
 		if now.tm_mon == 12 and now.tm_mday > 25:
 			query = re.sub('christmas', '12/25/' + now.tm_year + 1, query)
