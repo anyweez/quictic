@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import json, datetime, cgi, time, re, urllib, sys, pytz
+import json, datetime, cgi, time, re, urllib, sys
 # Import parsedatetime library from http://github.com/bear/parsedatetime.git
 import pdt
 
