@@ -1,7 +1,5 @@
 #!/usr/bin/python
-
-import cgi
-import json
+import json, datetime, cgi
 
 def add_header(msg):
 	msg.append("Content-type: text/json")
