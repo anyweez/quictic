@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import json, datetime, cgi, time, re, urllib, sys, string
+import json, datetime, cgi, time, re, urllib, sys, string, time
 # Import parsedatetime library from http://github.com/bear/parsedatetime.git
 import pdt
 
@@ -43,10 +43,12 @@ def parse(query, msg):
 		dt = datetime.datetime( *result[:6] ).replace(tzinfo=None)
 		sys.stderr.write( 'type: %s' % str(what) )
 	elif what == 3:
-		sys.stderr.write( str(result) )
-		sys.stderr.write( str(type(result)) )
+		dt = datetime.fromtimestamp(mktime(result))
+		
+#		sys.stderr.write( str(result) )
+#		sys.stderr.write( str(type(result)) )
 		dt = result.replace(tzinfo=None)
-		sys.stderr.write( 'type: %s' % str(what) )
+#		sys.stderr.write( 'type: %s' % str(what) )
 	else:
 		msg.append(json.dumps({ 'orig' : query, 'date': None}))
 
