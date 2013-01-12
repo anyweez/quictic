@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import json, datetime, cgi, time, re, urllib
+import json, datetime, cgi, time, re, urllib, sys
 # Import parsedatetime library from http://github.com/bear/parsedatetime.git
 import pdt
 
@@ -47,10 +47,10 @@ def parse(query, msg):
 
 	if what in (1, 2):
 		dt = datetime.datetime( *result[:6] )
-		print 'type: ' + str(what)
+		sys.stderr.write( 'type: %s' % str(what) )
 	elif what == 3:
 		dt = result
-		print 'type: ' + str(what)
+		sys.stderr.write( 'type: %s' % str(what) )
 	else:
 		msg.append(json.dumps({ 'orig' : query, 'date': None}))
 
@@ -62,7 +62,7 @@ def main():
 	
 	add_header(message)
 	query_string = get_string(message)
-	print 'query_string = ' + query_string
+	sys.stderr.write( 'query_string = %s\n' % query_string )
 	
 	# If there's no query string then call it off.
 	if query_string is None:
