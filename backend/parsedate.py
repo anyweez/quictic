@@ -35,7 +35,7 @@ def main():
 	message = []
 	
 	add_header(message)
-	query_string = get_string(msg)
+	query_string = get_string(message)
 	
 	# If there's no query string then call it off.
 	if query_string is None:
