@@ -72,9 +72,9 @@ def st2_replace(query):
 
 	# Holidees, etc
 	if now.tm_mon == 12 and now.tm_mday > 25:
-		query = re.sub('christmas', '12/25/' + str(now.tm_year + 1))
+		query = re.sub('christmas', '12/25/' + str(now.tm_year + 1), query)
 	else:
-		query = re.sub('christmas', '12/25/' + str(now.tm_year))
+		query = re.sub('christmas', '12/25/' + str(now.tm_year), query)
 	
 	return query
 
