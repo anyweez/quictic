@@ -11,7 +11,7 @@ def get_string(msg):
 	args = cgi.FieldStorage()
 	
 	try:
-		return args['str']
+		return args['str'].value
 	except KeyError:
 		msg.append(json.dumps({ 'error_text' : 'No query string provided.', 'error_code': 1}))
 		return None
