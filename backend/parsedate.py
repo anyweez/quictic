@@ -98,6 +98,7 @@ def main():
 		# Write to log
 		with open(LOG_FILE, 'a') as f:
 			f.write('%s\t%s\t%s' % ('none', '', 'no_query'))	
+			f.flush()
 		return
 
 	parsed_date = parse(query_string, message)
@@ -108,6 +109,7 @@ def main():
 		# Write to log
 		with open(LOG_FILE, 'a') as f:
 			f.write('%s\t%s\t%s' % (query_str, 'unknown', 'unknown'))	
+			f.flush()
 		return
 	
 	date_str = parsed_date.strftime("%Y%m%d@%H%M%S")
@@ -116,6 +118,7 @@ def main():
 	# Write to log
 	with open(LOG_FILE, 'a') as f:
 		f.write('%s\t%s\t%s' % (query_string, date_str, 'success'))	
+		f.flush()
 
 	write_out(message)
 
