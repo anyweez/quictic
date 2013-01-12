@@ -43,8 +43,7 @@ def parse(query, msg):
 		dt = datetime.datetime( *result[:6] ).replace(tzinfo=None)
 		sys.stderr.write( 'type: %s' % str(what) )
 	elif what == 3:
-		dt = datetime.datetime.fromtimestamp(time.mktime(result))
-		
+		result = datetime.datetime.fromtimestamp(time.mktime(result))
 #		sys.stderr.write( str(result) )
 #		sys.stderr.write( str(type(result)) )
 		dt = result.replace(tzinfo=None)
