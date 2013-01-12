@@ -1,10 +1,12 @@
 #!/usr/bin/python
-import json, datetime, cgi
+import json, datetime, cgi, time
 
+# Print a standard JSON header.
 def add_header(msg):
 	msg.append("Content-type: text/json")
 	msg.append("")
-	 
+
+# Extract the query parameter.
 def get_string(msg):
 	args = cgi.FieldStorage()
 	
@@ -30,6 +32,7 @@ def parse(query, msg):
 		return datetime.datetime.now()
 		
 def main():
+	start_time = time.time()
 	message = []
 	
 	add_header(message)
@@ -47,7 +50,7 @@ def main():
 		return
 	
 	date_str = parsed_date.strftime("%Y%m%d@%H%M%S")
-	message.append(json.dumps({ 'date' : date_str, 'orig' : query_string}))
+	message.append(json.dumps({ 'date' : date_str, 'orig' : query_string, 'runtime' : time.time() - start_time }))
 
 	write_out(message)
 
