@@ -71,11 +71,11 @@ function thm_standard() {
  *****************/
  
 function prv_combo(element) {
-  element.css('background-image', 'url(http://localhost/quictic/img/nasty_fabric.png)');
+  element.css('background-image', 'url(/img/nasty_fabric.png)');
 }
 
 function thm_combo() {
-  $('body').css('background-image', 'url(http://localhost/quictic/img/nasty_fabric.png)');
+  $('body').css('background-image', 'url(/img/nasty_fabric.png)');
   $('body').css('background-repeat', 'repeat');
   $('h1').css('text-shadow', '0px 0px');
   $('#heading').css('color', '#2A75A9');
