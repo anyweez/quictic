@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     
     <script src="http://quictic.com/js/date.js"></script>
+    <script src="http://localhost/quictic/js/themes.js"></script>
     
     <style type="text/css">
      body {
@@ -53,7 +54,6 @@
       margin: 2px;
       
       line-height: 24px;
-      text-shadow: 2px 2px 1px #333;
 	 }
      
      #container {
@@ -86,7 +86,7 @@
 	  background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
 	  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
 	  background-color:#ededed;
-	  border:1px solid #dcdcdc;
+	  border:1px solid #000;
 	  display:inline-block;
 	  color:#777777;
 	  font-family:arial;
@@ -120,6 +120,25 @@
       display: none;
      }
      
+     .style_container {
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+      margin-right: 5px;
+      
+      border: 1px solid black;
+      background-color: white;
+	 }
+	 
+	 .style_sample {
+      margin: 1px;
+      width: 41px;
+      height: 41px;
+ 
+      border: 1px solid black;     
+      cursor: pointer;
+	 }
+     
      .ui-tooltip {
 	  font-size: .8em;
 	  width: 500px;
@@ -136,9 +155,53 @@
 	   },
 	   opacity: 0.9
 	  });
+	  
+	  // Load some sample text for the text field placeholders.
+	  sample();
+	  
+	  // Load all of the defined styles and create UI elements for selecting them.
+	  load_styles();
 	 });    
+	 
+	 /**
+	  * Fetch a random example countdown name and date.
+	  */
+	 function sample() {
+		 var samples = [
+			['Christmas', 'Christmas, 12/25, or dec 25'],
+			['Gotta get down', 'this friday']
+		 ];
+		 
+		 var i = Math.floor(Math.random() * samples.length);
+		 var name = samples[i][0];
+		 var when = samples[i][1];
+		 
+		 $('#name').attr('placeholder', 'Countdown title (i.e. ' + name + ')');
+		 $('#when').attr('placeholder', 'Countdown to... (i.e. ' + when + ')');
+	 }
+	 
+	 /**
+	  * Load UI elements for all of the available styles.
+	  *
+	  */
+	 function load_styles() {
+		 var themes = get_themes();
+		 for (key in themes) {
+			 $('#styles').append('<div class="style_container" title="' + 
+				themes[key].name + '" onclick="' + 
+			    'apply_theme(\'' + key + '\');">' +
+			    '<div class="style_sample" title="' + themes[key].name + '"' +
+			    'id="theme-' + key + '"></div></div>');
+			 
+			 // Apply theme styling.
+			 themes[key].preview($('#theme-' + key));
+		 }
+	 }
+	 
     /**
      * This function checks for known cases that DateJS misses.
+     * It converts common phrases to dates, which are then 
+     * reprocessed by DateJS.
      *
      * Returns either a DateJS date object or null if the text
      * can't be parsed correctly.
@@ -173,7 +236,7 @@
 	 }
      
      function countdown() {
-      var title = $('#title').val();
+      var title = $('#name').val();
       var when = $('#when').val();
       var style = 'a';
       
@@ -204,6 +267,10 @@
       // Change the window location.
       window.location.href = url;
      }
+     
+     $(document).ready(function() {
+		 apply_theme('a');
+	 });
     </script>
   </head>
   <body>
@@ -214,8 +281,10 @@
      <p>quickly create shareable countdowns<br />just provide a title and some time to count down to.</p>
     </div>
     <div id="fields">
-     <input type="text" id="title" placeholder="Countdown name" />
+     <input type="text" id="name" placeholder="Countdown name" />
      <input type="text" id="when" title="Testing" placeholder="Countdown to..." />
+     <!-- container for all of the style markers -->
+     <div id="styles"></div>
     </div>
     <input type="button" id="btn" onclick="countdown()" value="Create" />
     </div>
