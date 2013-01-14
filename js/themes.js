@@ -30,12 +30,12 @@ function apply_theme(theme_id) {
  * this theme.
  */
 function prv_standard(element) {
-  element.css('background-image', 'url(img/debut_dark.png)');
+  element.css('background-image', 'url(/img/debut_dark.png)');
 }
 
 function thm_standard() {
   // Set global colors and fonts.
-  $('body').css('background-image', 'url(img/debut_dark.png)');
+  $('body').css('background-image', 'url(/img/debut_dark.png)');
   $('body').css('background-repeat', 'repeat');
   $('#heading').css('color', '#DBDBAD');
   $('#heading').css('text-shadow', '2px 2px 2px #333');
@@ -71,11 +71,11 @@ function thm_standard() {
  *****************/
  
 function prv_combo(element) {
-  element.css('background-image', 'url(img/nasty_fabric.png)');
+  element.css('background-image', 'url(/img/nasty_fabric.png)');
 }
 
 function thm_combo() {
-  $('body').css('background-image', 'url(img/nasty_fabric.png)');
+  $('body').css('background-image', 'url(/img/nasty_fabric.png)');
   $('body').css('background-repeat', 'repeat');
   $('h1').css('text-shadow', '0px 0px');
   $('#heading').css('color', '#2A75A9');
